@@ -4,7 +4,7 @@
 // SI BIEN NO ES TAN COMPLEJO HACER UNA CALCULADOR INTENTE QUE SEA LO MAS DINAMICA POSIBLE
 
 //DE CLARACION DE CONSTANTE,VARIABLES
-const CONTINUAR = 3;
+/* const CONTINUAR = 3;
 let contador1;
 let contador2;
 //FUNCION PARA EL ELEGIR METODO
@@ -113,4 +113,87 @@ function consulta(e) {
       alert("Opcion no valida.");
     };
   };
+}; */
+
+/////////////////////////////////////////////////////
+
+let tarea = [];
+
+const agregarTarea = () => {
+  const tareas = prompt('Ingrese la nueva tarea:'),
+    fecha = prompt('Ingrese la fecha (dd/mm/aaaa):'),
+    nuevaTarea = { tareas, fecha, completado: false };
+
+  tarea.push(nuevaTarea);
+  alert(`Se agrego la tarea: "${tareas}" para la fecha: ${fecha}.`);
 };
+
+
+const buscadorDeTarea = () => {
+  const letra = prompt('Ingrese la palabra clave para buscar:'),
+    tareasFiltradas = tarea.filter(task => task.tareas.includes(letra));
+
+  if (tareasFiltradas.length > 0) {
+    const tareasEncontradas = tareasFiltradas.map(task => task.tareas).join('\n');
+    alert(`Tareas que coinciden con "${letra}":\n${tareasEncontradas}`);
+  } else {
+    alert(`No se encontraron tareas con "${letra}".`);
+  }
+}
+
+const verLasTareas = () => {
+  if (tarea.length > 0) {
+    let tasksList = 'Lista de tareas:\n';
+    tarea.forEach((task, index) => {
+      tasksList += `${index + 1}. "${task.tareas}" para el ${task.fecha}. Estado: ${task.completado ? 'Completada' : 'Pendiente'}\n`;
+    });
+    alert(tasksList);
+  } else {
+    alert('La lista de tareas está vacía.');
+  }
+}
+
+const completarTareas = () => {
+  const index = parseInt(prompt('Ingrese el índice de la tarea a marcar como completada:')),
+    ordenIndex = index - 1;
+
+  if (ordenIndex >= 0 && ordenIndex < tarea.length) {
+    tarea[ordenIndex].completado = true;
+    alert(`Tarea "${tarea[ordenIndex].tareas}" marcada como completada.`);
+  } else {
+    alert('Número de tarea incorrecto.');
+  };
+};
+
+let resultado = 0;
+
+while (resultado !== 5) {
+  resultado = parseInt(prompt(
+    'Ingrese una opcion:\n1. Agregar tarea\n2. Buscar tarea\n3. Mostrar todas las tareas\n4. Marcar tarea como completada\n5. Salir'
+  ));
+
+  switch (resultado) {
+    case 1:
+      agregarTarea();
+      break;
+    case 2:
+      buscadorDeTarea();
+      break;
+    case 3:
+      verLasTareas();
+      break;
+    case 4:
+      completarTareas();
+      break;
+    case 5:
+      alert("Gracias por su prueba.");
+      break;
+    default:
+      alert("Numero incorrecto.");
+      break;
+  };
+};
+
+
+
+
